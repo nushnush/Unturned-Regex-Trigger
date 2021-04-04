@@ -11,16 +11,13 @@ namespace RegexTrigger
 {
     class Main : RocketPlugin<Configuration>
     {
-        public static Main instance { private set; get; }
         protected override void Load()
         {
-            instance = this;
             UnturnedPlayerEvents.OnPlayerChatted += PlayerChatted;
         }
 
         protected override void Unload()
         {
-            instance = null;
             UnturnedPlayerEvents.OnPlayerChatted -= PlayerChatted;
         }
 
@@ -31,8 +28,8 @@ namespace RegexTrigger
 
             for (int i = 0; i < regexes.Count; i++)
             {
-                r = new Regex(regexes[i], RegexOptions.IgnoreCase);
-                var matches = r.Matches(@"" + message);
+                r = new Regex(@"" + regexes[i], RegexOptions.IgnoreCase);
+                var matches = r.Matches(message);
 
                 if (matches != null && matches.Count > 0)
                 {
